@@ -8,7 +8,7 @@
 (define (sum-adjacents s)
   (define start-idx 0)
   (define (worker idx accum)
-    (define next-idx (modulo (+ idx 1) (string-length s)))
+    (define next-idx (modulo (add1 idx) (string-length s)))
     (define this-char (string-ref s idx))
     (define next-char (string-ref s next-idx))
 
@@ -18,7 +18,7 @@
 
     (if (= next-idx start-idx)
         accum
-        (worker (+ idx 1) accum)))
+        (worker (add1 idx) accum)))
   (worker 0 0))
 
 (define (sum-halfway s)
@@ -34,9 +34,9 @@
       [(list c c) (set! accum (+ accum (char->number this-char)))]
       [_ null])
 
-    (if (= idx (- length 1))
+    (if (= idx (sub1 length))
         accum
-        (worker (+ idx 1) accum)))
+        (worker (add1 idx) accum)))
   (worker 0 0))
 
 (sum-adjacents s)
