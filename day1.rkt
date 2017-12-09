@@ -5,25 +5,23 @@
 (define (char->number c)
   (string->number (string c)))
 
+;; Sum adjacent identical digits in S.
 (define (sum-adjacents s)
-  (define start-idx 0)
-  (define (worker idx accum)
+  (let loop ([idx 0]
+             [accum 0])
     (define next-idx (modulo (add1 idx) (string-length s)))
     (define this-char (string-ref s idx))
     (define next-char (string-ref s next-idx))
-
     (match (list this-char next-char)
       [(list c c) (set! accum (+ accum (char->number this-char)))]
       [_ null])
-
-    (if (= next-idx start-idx)
+    (if (zero? next-idx)
         accum
-        (worker (add1 idx) accum)))
-  (worker 0 0))
+        (loop (add1 idx) accum))))
 
 (define (sum-halfway s)
-  (define start-idx 0)
-  (define (worker idx accum)
+  (let loop ([idx 0]
+             [accum 0])
     (define this-char (string-ref s idx))
     
     (define length (string-length s))
@@ -36,8 +34,7 @@
 
     (if (= idx (sub1 length))
         accum
-        (worker (add1 idx) accum)))
-  (worker 0 0))
+        (loop (add1 idx) accum))))
 
 (sum-adjacents s)
 (sum-halfway s)
